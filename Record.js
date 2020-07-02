@@ -1,7 +1,6 @@
 // メールから取得した入退室記録をカレンダーに追記
 function checking_out() {
   var p_sheet = SpreadsheetApp.getActiveSheet();
-  var test = "テスト";
 
   // 未読の入退室メールを取得
   var p_lastRow = p_sheet.getLastRow();
