@@ -17,11 +17,11 @@ function checking_out() {
 
   // 入室のカレンダーを作成
   // カレンダー名を取得
-  var p_calendar_nm = p_sheet.getRange(p_lastRow, 2).getValue();  // すやあを取得
+  var calendar_nm = p_sheet.getRange(p_lastRow, 2).getValue();  // すやあを取得
   // 睡眠時間を取得
   var p_bed_time = p_sheet.getRange(p_lastRow, 1).getValue();
   Logger.log("すやあの時間:" + p_bed_time);
-  createEvent(p_calendar_nm, p_bed_time, p_bed_time, null);
+  createEvent(calendar_nm, p_bed_time, p_bed_time, null);
 }
 
 // 行の値が光ちゃんおはであるか判定
@@ -41,8 +41,8 @@ function createSleepDiary(x_wakeup_row, x_sleep_row) {
   Logger.log("睡眠時間:" + p_sleeping_time);
 
   // カレンダーを作成する
-  var p_calendar_nm = p_sheet.getRange(x_wakeup_row, 2).getValue();  // 睡眠を取得
-  createEvent(p_calendar_nm, p_bed_time, p_wakeup_time, p_sleeping_time);
+  var calendar_nm = p_sheet.getRange(x_wakeup_row, 2).getValue();  // 睡眠を取得
+  createEvent(calendar_nm, p_bed_time, p_wakeup_time, p_sleeping_time);
 }
 
 // カレンダーに日付をセットする
@@ -50,8 +50,9 @@ function createEvent(x_calendar_nm, x_bed_time, x_wakeup_time, x_sleeping_time){
   Logger.log("カレンダー名:" + x_calendar_nm);
 
   // 光ちゃんカレンダー
-  var p_calendar = CalendarApp.getCalendarById("bgq6sq6oh7l7ptkig2lmboulq8@group.calendar.google.com");
-  p_calendar.createEvent(x_calendar_nm, new Date(x_bed_time), new Date(x_wakeup_time) , {description: x_sleeping_time});
+  var hikari_calendar = PropertiesService.getScriptProperties().getProperty("HIKARI_CALENDAR");
+  var calendar = CalendarApp.getCalendarById(hikari_calendar);
+  calendar.createEvent(x_calendar_nm, new Date(x_bed_time), new Date(x_wakeup_time) , {description: x_sleeping_time});
 }
 
 // 睡眠時間を取得
