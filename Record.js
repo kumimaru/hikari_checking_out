@@ -54,10 +54,10 @@ function checking_out() {
 }
 
 // 入退室記録をカレンダーに作成する
-function createTimeCheckingOut(x_first_row, x_last_row) {
+function createTimeCheckingOut(x_last_row, x_first_row) {
   let sheet = SpreadsheetApp.getActiveSheet();
-  let enter_time = sheet.getRange(x_first_row, 1).getValue();
   let checking_out = sheet.getRange(x_last_row, 1).getValue();
+  let enter_time = sheet.getRange(x_first_row, 1).getValue();
   let checking_out_time = getDiff(checking_out, enter_time);
   Logger.log("入退室:" + checking_out_time);
 
