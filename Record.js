@@ -62,7 +62,7 @@ function createTimeCheckingOut() {
   Logger.log("入退室:" + checking_out_time);
 
   // カレンダーを作成する
-  let calendar_nm = sheet.getRange(x_last_row, 2).getValue();
+  let calendar_nm = sheet.getRange(sheet.getLastRow(), 2).getValue();
   createEvent(calendar_nm, enter_time, checking_out, checking_out_time);
 }
 
