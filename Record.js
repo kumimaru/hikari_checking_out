@@ -44,7 +44,10 @@ function checking_out() {
     createEvent(calendar_nm, enter_time, enter_time, null);
     Logger.log("入室処理の終了");
     // メールを既読にする
-    threads[0].markRead();
+    for (let i = 0; i < threads.length; i++) {
+      threads[i].markRead();
+    }
+    
     return;
   }
 
@@ -53,7 +56,10 @@ function checking_out() {
   createTimeCheckingOut();
   Logger.log("退室処理の終了");
   // メールを既読にする
-  threads[0].markRead();
+  for (let i = 0; i < threads.length; i++) {
+    threads[i].markRead();
+  }
+
   return;
 }
 
