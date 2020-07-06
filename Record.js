@@ -27,7 +27,7 @@ function checking_out() {
 
   // シートのフォーマットを指定の日時に設定
   let sheet = SpreadsheetApp.getActiveSheet();
-  let lastRow = sheet.getLastRow();
+  let lastRow = sheet.getLastRow() + 1;
   sheet.getRange(lastRow, 1).setNumberFormat("yyyy/mm/dd HH:mm:ss")
 
   // シートにメールの取得日時と件名を記録
