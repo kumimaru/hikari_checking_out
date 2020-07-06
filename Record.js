@@ -35,17 +35,22 @@ function checking_out() {
 
   // 取得したメールの件名が入室か退室のどちらであるかを判定
   if(values[1] === "【奈良すこやか保育園】入室のお知らせ") {
+    Logger.log("入室処理の開始");
     // 入室記録を取得
     let checking_out = sheet.getRange(lastRow, 1).getValue();
     // 入室のカレンダー名を取得
     let calendar_nm = sheet.getRange(lastRow, 2).getValue();
     // カレンダーを作成
     createEvent(calendar_nm, checking_out, checking_out, null);
+    Logger.log("入室処理の終了");
     return;
   }
 
   // 退室の場合、入室から退室までの時間をカレンダーに設定
+  Logger.log("退室処理の開始");
   createTimeCheckingOut(lastRow - 1, lastRow);
+  Logger.log("退室処理の終了");
+  return;
 }
 
 // 入退室記録をカレンダーに作成する
@@ -69,6 +74,8 @@ function createEvent(x_calendar_nm, x_last_time, x_enter_time, x_sleeping_time){
   let hikari_calendar = PropertiesService.getScriptProperties().getProperty("HIKARI_CALENDAR");
   let calendar = CalendarApp.getCalendarById(hikari_calendar);
   calendar.createEvent(x_calendar_nm, new Date(x_last_time), new Date(x_enter_time) , {description: x_sleeping_time});
+  
+  return;
 }
 
 // 差分の時間を取得
