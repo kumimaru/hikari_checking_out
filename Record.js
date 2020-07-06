@@ -34,7 +34,7 @@ function checking_out() {
   sheet.getRange(lastRow, 1, values.length, values[0].length).setValues(values);
 
   // 取得したメールの件名が入室か退室のどちらであるかを判定
-  if(values[1] === "【奈良すこやか保育園】入室のお知らせ") {
+  if(sheet.getRange(lastRow, 2) === "【奈良すこやか保育園】入室のお知らせ") {
     Logger.log("入室処理の開始");
     // 入室記録を取得
     let checking_out = sheet.getRange(lastRow, 1).getValue();
@@ -74,7 +74,7 @@ function createEvent(x_calendar_nm, x_last_time, x_enter_time, x_sleeping_time){
   let hikari_calendar = PropertiesService.getScriptProperties().getProperty("HIKARI_CALENDAR");
   let calendar = CalendarApp.getCalendarById(hikari_calendar);
   calendar.createEvent(x_calendar_nm, new Date(x_last_time), new Date(x_enter_time) , {description: x_sleeping_time});
-  
+
   return;
 }
 
