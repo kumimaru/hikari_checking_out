@@ -48,7 +48,7 @@ function checking_out() {
 
   // 退室の場合、入室から退室までの時間をカレンダーに設定
   Logger.log("退室処理の開始");
-  createTimeCheckingOut(lastRow - 1, lastRow);
+  createTimeCheckingOut(lastRow, lastRow - 1);
   Logger.log("退室処理の終了");
   return;
 }
@@ -79,19 +79,19 @@ function createEvent(x_calendar_nm, x_last_time, x_enter_time, x_sleeping_time){
 }
 
 // 差分の時間を取得
-function getDiff(x_last_time, x_enter_time) {
+function getDiff(x_checking_out, x_enter_time) {
 
-  let checking_out = Moment.moment(x_last_time);
+  let checking_out = Moment.moment(x_checking_out);
   let enter_time = Moment.moment(x_enter_time);
   Logger.log("checking_out:" + checking_out);
   Logger.log("enter_time:" + enter_time);
 
   // 時間計算
-  let hour = enter_time.diff(checking_out,"h");
+  let hour = checking_out.diff(enter_time,"h");
   Logger.log("hour:" + hour);
 
   // 分計算
-  let minute = enter_time.diff(checking_out,"m");
+  let minute = checking_out.diff(enter_time,"m");
   Logger.log("minute:" + minute);
 
   let mm = minute - (hour * 60);
