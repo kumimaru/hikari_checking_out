@@ -37,61 +37,61 @@ function checking_out() {
   if(sheet.getRange(lastRow, 2).getValue() === "【奈良すこやか保育園】入室のお知らせ") {
     Logger.log("入室処理の開始");
     // 入室記録を取得
-    let checking_out = sheet.getRange(lastRow, 1).getValue();
+    let enter_time = sheet.getRange(lastRow, 1).getValue();
     // 入室のカレンダー名を取得
     let calendar_nm = sheet.getRange(lastRow, 2).getValue();
     // カレンダーを作成
-    createEvent(calendar_nm, checking_out, checking_out, null);
+    createEvent(calendar_nm, enter_time, enter_time, null);
     Logger.log("入室処理の終了");
     return;
   }
 
   // 退室の場合、入室から退室までの時間をカレンダーに設定
   Logger.log("退室処理の開始");
-  createTimeCheckingOut(lastRow, lastRow - 1);
+  createTimeCheckingOut();
   Logger.log("退室処理の終了");
   return;
 }
 
 // 入退室記録をカレンダーに作成する
-function createTimeCheckingOut(x_last_row, x_first_row) {
+function createTimeCheckingOut() {
   let sheet = SpreadsheetApp.getActiveSheet();
-  let checking_out = sheet.getRange(x_last_row, 1).getValue();
-  let enter_time = sheet.getRange(x_first_row, 1).getValue();
-  let checking_out_time = getDiff(checking_out, enter_time);
+  let enter_time = sheet.getRange(sheet.getLastRow()-1, 1).getValue();
+  let checking_out = sheet.getRange(sheet.getLastRow(), 1).getValue();
+  let checking_out_time = getDiff(enter_time, checking_out);
   Logger.log("入退室:" + checking_out_time);
 
   // カレンダーを作成する
   let calendar_nm = sheet.getRange(x_last_row, 2).getValue();
-  createEvent(calendar_nm, checking_out, enter_time, checking_out_time);
+  createEvent(calendar_nm, enter_time, checking_out, checking_out_time);
 }
 
 // カレンダーに日付をセットする
-function createEvent(x_calendar_nm, x_last_time, x_enter_time, x_sleeping_time){
+function createEvent(x_calendar_nm, x_from, x_to, x_description){
   Logger.log("カレンダー名:" + x_calendar_nm);
 
   // 光ちゃんカレンダー
   let hikari_calendar = PropertiesService.getScriptProperties().getProperty("HIKARI_CALENDAR");
   let calendar = CalendarApp.getCalendarById(hikari_calendar);
-  calendar.createEvent(x_calendar_nm, new Date(x_last_time), new Date(x_enter_time) , {description: x_sleeping_time});
+  calendar.createEvent(x_calendar_nm, new Date(x_from), new Date(x_to), {description: x_description});
 
   return;
 }
 
 // 差分の時間を取得
-function getDiff(x_checking_out, x_enter_time) {
+function getDiff(x_from, x_to) {
 
-  let checking_out = Moment.moment(x_checking_out);
-  let enter_time = Moment.moment(x_enter_time);
-  Logger.log("checking_out:" + checking_out);
-  Logger.log("enter_time:" + enter_time);
+  let from = Moment.moment(x_from);
+  Logger.log("from:" + from);
+  let to = Moment.moment(x_to);
+  Logger.log("to:" + to);
 
   // 時間計算
-  let hour = checking_out.diff(enter_time,"h");
+  let hour = from.diff(to,"h");
   Logger.log("hour:" + hour);
 
   // 分計算
-  let minute = checking_out.diff(enter_time,"m");
+  let minute = from.diff(to,"m");
   Logger.log("minute:" + minute);
 
   let mm = minute - (hour * 60);
