@@ -20,7 +20,7 @@ function checking_out() {
     ];
     values.push(record);
   }
-  if (values.length < 0) {
+  if (values.length <= 0) {
     // メールが取得できなければ処理終了
     return;
   }
