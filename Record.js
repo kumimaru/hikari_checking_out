@@ -34,7 +34,7 @@ function checking_out() {
   sheet.getRange(lastRow, 1, values.length, values[0].length).setValues(values);
 
   // 取得したメールの件名が入室か退室のどちらであるかを判定
-  if(sheet.getRange(lastRow, 2) === "【奈良すこやか保育園】入室のお知らせ") {
+  if(sheet.getRange(lastRow, 2).getValue() === "【奈良すこやか保育園】入室のお知らせ") {
     Logger.log("入室処理の開始");
     // 入室記録を取得
     let checking_out = sheet.getRange(lastRow, 1).getValue();
