@@ -26,10 +26,12 @@ function checking_out() {
   }
 
   // シートのフォーマットを指定の日時に設定
-  var lastRow = SpreadsheetApp.getActiveSheet().getLastRow();
+  let sheet = SpreadsheetApp.getActiveSheet();
+  var lastRow = sheet.getLastRow();
   sheet.getRange(lastRow, 1).setNumberFormat("yyyy/mm/dd HH:mm:ss")
+
   // シートにメールの取得日時と件名を記録
-  SpreadsheetApp.getActiveSheet().getRange(lastRow, 1, values.length, values[0].length).setValues(values);
+  sheet.getRange(lastRow, 1, values.length, values[0].length).setValues(values);
 
   // 取得したメールの件名が入室か退室のどちらであるかを判定
   if(values[1] === "【奈良すこやか保育園】入室のお知らせ") {
