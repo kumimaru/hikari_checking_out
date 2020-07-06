@@ -87,11 +87,11 @@ function getDiff(x_from, x_to) {
   Logger.log("to:" + to);
 
   // 時間計算
-  let hour = from.diff(to,"h");
+  let hour = to.diff(from,"h");
   Logger.log("hour:" + hour);
 
   // 分計算
-  let minute = from.diff(to,"m");
+  let minute = to.diff(from,"m");
   Logger.log("minute:" + minute);
 
   let mm = minute - (hour * 60);
