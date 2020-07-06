@@ -1,6 +1,5 @@
 // メールから取得した入退室記録をカレンダーに追記
 function checking_out() {
-  // TODO: メールを取得する処理を実装する
   // メールの送信者：奈良すこやか保育園 未読
   const query = 'from:cdm7019rqBk@codmon.com is:unread';
   // メールの検索範囲
