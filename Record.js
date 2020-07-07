@@ -38,16 +38,14 @@ function checking_out() {
     Logger.log("入室処理の開始");
     // 入室記録を取得
     let enter_time = sheet.getRange(lastRow, 1).getValue();
-    // 入室のカレンダー名を取得
-    let calendar_nm = sheet.getRange(lastRow, 2).getValue();
     // カレンダーを作成
-    createEvent(calendar_nm, enter_time, enter_time, null);
+    createEvent("登園", enter_time, enter_time, null);
     Logger.log("入室処理の終了");
     // メールを既読にする
     for (let i = 0; i < threads.length; i++) {
       threads[i].markRead();
     }
-    
+
     return;
   }
 
@@ -72,8 +70,7 @@ function createTimeCheckingOut() {
   Logger.log("入退室:" + checking_out_time);
 
   // カレンダーを作成する
-  let calendar_nm = sheet.getRange(sheet.getLastRow(), 2).getValue();
-  createEvent(calendar_nm, enter_time, checking_out, checking_out_time);
+  createEvent("保育園", enter_time, checking_out, checking_out_time);
 }
 
 // カレンダーに日付をセットする
