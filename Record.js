@@ -34,7 +34,15 @@ function checking_out() {
   sheet.getRange(lastRow, 1, values.length, values[0].length).setValues(values);
 
   // 取得したメールの件名が入室か退室のどちらであるかを判定
-  if(sheet.getRange(lastRow, 2).getValue() === "【奈良すこやか保育園】入室のお知らせ") {
+  let enrollment = "【奈良すこやか保育園】入室のお知らせ";
+  let leaving = "【奈良すこやか保育園】退室のお知らせ";
+  let subject = sheet.getRange(lastRow, 2).getValue();
+  if (subject !== enrollment && subject !== leaving) {
+    Logger.log("入退室に関するメールではないため、処理終了");
+    return;
+  }
+
+  if(subject === enrollment) {
     Logger.log("入室処理の開始");
     // 入室記録を取得
     let enter_time = sheet.getRange(lastRow, 1).getValue();
