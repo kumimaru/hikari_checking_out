@@ -22,6 +22,7 @@ function checking_out() {
   }
   if (values.length <= 0) {
     // メールが取得できなければ処理終了
+    Logger.log("メールが取得できないため、処理終了");
     return;
   }
 
