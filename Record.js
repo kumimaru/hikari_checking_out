@@ -35,8 +35,8 @@ function checking_out() {
   sheet.getRange(lastRow, 1, values.length, values[0].length).setValues(values);
 
   // メールの件名を取得 ※入退室以外のメールの場合は処理終了
-  let enrollment = "【奈良すこやか保育園】入室のお知らせ";
-  let leaving = "【奈良すこやか保育園】退室のお知らせ";
+  const enrollment = "【奈良すこやか保育園】入室のお知らせ";
+  const leaving = "【奈良すこやか保育園】退室のお知らせ";
   let subject = sheet.getRange(lastRow, 2).getValue();
   if (subject !== enrollment && subject !== leaving) {
     Logger.log("入退室に関するメールではないため、処理終了");
