@@ -38,8 +38,23 @@ function checking_out() {
   const enrollment = "【奈良すこやか保育園】入室のお知らせ";
   const leaving = "【奈良すこやか保育園】退室のお知らせ";
   let subject = sheet.getRange(lastRow, 2).getValue();
+  Logger.log("メール件名：" + subject);
   if (subject !== enrollment && subject !== leaving) {
     Logger.log("入退室に関するメールではないため、処理終了");
+    return;
+  }
+
+  // 登録した行から一つ前の件名を取得
+  let subject_before = sheet.getRange(lastRow-1, 2).getValue();
+  Logger.log("一つ前のメール件名：" + subject_before);
+
+  // 退室のお知らせである場合、入退室の時間が取得できないため、処理終了
+  if (subject === subject_before) {
+    // メールを既読にする
+    for (let i = 0; i < threads.length; i++) {
+      threads[i].markRead();
+    }
+    Logger.log("退室のお知らせが続くと入退室の時間が取得できないため、メールを既読にして処理終了");
     return;
   }
 
@@ -98,9 +113,9 @@ function createEvent(x_calendar_nm, x_from, x_to, x_description){
 // 差分の時間を取得
 function getDiff(x_from, x_to) {
 
-  let from = Moment.moment(x_from);
+  let from = dayjs.dayjs(x_from);
   Logger.log("from:" + from);
-  let to = Moment.moment(x_to);
+  let to = dayjs.dayjs(x_to);
   Logger.log("to:" + to);
 
   // 時間計算
