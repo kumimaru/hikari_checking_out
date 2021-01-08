@@ -48,13 +48,13 @@ function checking_out() {
   let subject_before = sheet.getRange(lastRow-1, 2).getValue();
   Logger.log("一つ前のメール件名：" + subject_before);
 
-  // 退室のお知らせである場合、入退室の時間が取得できないため、処理終了
+  // 入室、または退室のお知らせが連続して登録された場合、入退室の時間が取得できないため、処理終了
   if (subject === subject_before) {
     // メールを既読にする
     for (let i = 0; i < threads.length; i++) {
       threads[i].markRead();
     }
-    Logger.log("退室のお知らせが続くと入退室の時間が取得できないため、メールを既読にして処理終了");
+    Logger.log("同じお知らせが続くと入退室の時間が取得できないため、メールを既読にして処理終了");
     return;
   }
 
